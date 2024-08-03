@@ -6,4 +6,5 @@ while 1:
         break
     s += n
     i += 1
-print(f'{s/i:.2f}')
+if i != 0:
+    print(f'{s/i:.2f}')
