@@ -1,7 +1,10 @@
 s = 0
 i = 0
 while 1:
-    n = int(input())
+    try:
+        n = int(input())
+    except EOFError:
+        break
     if n >= 30:
         break
     s += n
