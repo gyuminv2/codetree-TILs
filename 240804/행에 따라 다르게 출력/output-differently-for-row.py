@@ -8,5 +8,9 @@ for i in range(n):
         if i % 2 != 0:
             print(o, end=' ')
             o += 1
-    o += 1
+        o += 1
+    if i % 2 == 0:
+        o += 1
+    if i % 2 != 0:
+        o -= 1
     print()
