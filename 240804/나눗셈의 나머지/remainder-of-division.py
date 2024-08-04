@@ -3,7 +3,7 @@ arr = []
 rtn = 0
 tmp = 1
 
-while a > 0:
+while a > 1:
     arr.append(a%b)
     a //= b
 
