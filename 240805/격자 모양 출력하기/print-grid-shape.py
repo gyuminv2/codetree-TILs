@@ -1,6 +1,6 @@
 n, m = map(int, input().split())
 
-arr = [[0 for _ in range(n)] for _ in range(m)]
+arr = [[0 for _ in range(n)] for _ in range(n)]
 
 for i in range(m):
     k, l = map(int, input().split())
