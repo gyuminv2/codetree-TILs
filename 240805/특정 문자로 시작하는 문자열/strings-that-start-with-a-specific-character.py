@@ -6,7 +6,7 @@ c = input()
 rtn = 0
 for i in range(n):
     if arr[i][0] != c:
-        arr.remove(i)
+        arr.remove(arr[i])
     else:
         rtn += len(arr[i])
 print(f'{len(arr)} {rtn/len(arr):.2f}')
