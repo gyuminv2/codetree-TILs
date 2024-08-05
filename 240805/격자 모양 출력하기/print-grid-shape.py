@@ -7,6 +7,6 @@ for i in range(n):
     arr[k-1][l-1] = k*l
 
 for i in range(n):
-    for j in range(m):
+    for j in range(n):
         print(arr[i][j], end=' ')
     print()
