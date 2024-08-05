@@ -4,9 +4,11 @@ for _ in range(n):
     arr.append(input())
 c = input()
 rtn = 0
+tmp = []
 for i in range(n):
     if arr[i][0] != c:
-        arr.remove(arr[i])
+        continue
     else:
+        tmp.append(arr[i])
         rtn += len(arr[i])
-print(f'{len(arr)} {rtn/len(arr):.2f}')
+print(f'{len(tmp)} {rtn/len(tmp):.2f}')
