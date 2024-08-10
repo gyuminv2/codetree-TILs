@@ -21,5 +21,7 @@ for i in range(n * n - 1):
         if in_range(nx, ny):
             if grid[x][y] < grid[nx][ny]:
                 x, y = x + dxs[move_dir], y + dys[move_dir]
+                move_dir = 0
                 print(grid[x][y], end = ' ')
+                break
         move_dir = (move_dir + 1) % 4
