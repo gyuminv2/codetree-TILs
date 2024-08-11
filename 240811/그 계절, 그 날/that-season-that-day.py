@@ -2,12 +2,15 @@ Y, M, D = map(int, input().split())
 
 def check_yoon(Y):
     if Y % 4 == 0:
-        return 1
-    if (Y % 4 == 0 and Y % 100 == 0) or Y % 400 == 0:
-        return 1
-    if Y % 4 == 0 and Y % 100 == 0:
-        return 0
-    return 0
+        if Y % 100 == 0:
+            if Y % 400 == 0:
+                return True
+            else:
+                return False
+        else:
+            return True
+    else:
+        return False
 
 yoon = check_yoon(Y)
 
