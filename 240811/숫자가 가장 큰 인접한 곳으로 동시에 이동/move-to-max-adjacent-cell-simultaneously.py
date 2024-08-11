@@ -20,8 +20,8 @@ def in_range(x, y):
 
 # n_goo = []
 for _ in range(t): # t초
-    move_dir = 0
     n_goo = []
+    tmp_goo = []
     for i in range(len(goo)): # m개의 구슬
         move_dir = 0
         big = 0
@@ -37,15 +37,18 @@ for _ in range(t): # t초
                 tmp_ny = ny
                 big = grid[nx][ny]
             move_dir = (move_dir + 1) % 4
-        # print(big)
+        # print('nx, nx:', (tmp_nx,tmp_ny))
+        # print('n_goo:', n_goo)
         if (tmp_nx, tmp_ny) in n_goo:
             n_goo.pop(n_goo.index((tmp_nx, tmp_ny)))
+            tmp_goo.append((tmp_nx, tmp_ny))
         else:
             n_goo.append((tmp_nx, tmp_ny))
-        # print(n_goo)
-        cnt[tmp_nx][tmp_ny] += 1
-        if cnt[tmp_nx][tmp_ny] > 1:
-            cnt[tmp_nx][tmp_ny] = 0
+    for x, y in tmp_goo:
+        for dx, dy in n_goo:
+            if x == dx and y == dy:
+                n_goo.pop(n_goo.index((dx, dy)))
+                continue
     goo = n_goo
     # print(goo)
 print(len(goo))
