@@ -3,7 +3,7 @@ Y, M, D = map(int, input().split())
 def check_yoon(Y):
     if Y % 4 == 0:
         return 1
-    elif Y % 4 == 0 and Y % 100 == 0and Y % 400 == 0:
+    elif Y % 4 == 0 and Y % 100 == 0 and Y % 400 == 0:
         return 1
     elif Y % 4 == 0 and Y % 100 == 0:
         return 0
@@ -31,7 +31,7 @@ def check_season(M, D):
     if 2 == M:
         if yoon == 1 and D >= 30:
             return -1
-        elif yoon == 0 and D == 31:
+        elif yoon == 0 and D >= 29:
             return -1
         else:
             return 'Winter'
