@@ -1,7 +1,7 @@
 Y, M, D = map(int, input().split())
 
 def check_yoon(Y):
-    if (Y % 4 == 0 and Y % 100 == 0) or (Y % 400):
+    if (Y % 4 == 0 and Y % 100 == 0) and (Y % 400):
         return 1
     return 0
 
