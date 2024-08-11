@@ -11,7 +11,7 @@ def check_yoon(Y):
 
 yoon = check_yoon(Y)
 
-def check_season(M, D):
+def check_season(M, D, y):
     if 3 <= M and M <= 5:
         if 4 == M and D == 31:
             return -1
@@ -27,12 +27,12 @@ def check_season(M, D):
     if 12 == M or 1 == M:
         return 'Winter'
     if 2 == M:
-        if yoon == 1 and D >= 30:
+        if y == 1 and D >= 30:
             return -1
-        elif yoon == 0 and D >= 29:
+        elif y == 0 and D >= 29:
             return -1
         else:
             return 'Winter'
     
-season = check_season(M, D)
+season = check_season(M, D, yoon)
 print(season)
