@@ -17,21 +17,22 @@ def find_idx(k):
 def in_range(x, y):
     return 0 <= x and x < n and 0 <= y and y < n
 
-for k in range(1, n * n + 1):
-    x, y = find_idx(k)
-    move_dir = 0
-    big = 0
-    tmp_nx, tmp_ny = 0, 0
-    for _ in range(8):
-        nx, ny = x + dxs[move_dir], y + dys[move_dir]
-        if not in_range(nx, ny):
+for _ in range(m):
+    for k in range(1, n * n + 1):
+        x, y = find_idx(k)
+        move_dir = 0
+        big = 0
+        tmp_nx, tmp_ny = 0, 0
+        for _ in range(8):
+            nx, ny = x + dxs[move_dir], y + dys[move_dir]
+            if not in_range(nx, ny):
+                move_dir = (move_dir + 1) % 8
+                continue
+            if big < grid[nx][ny]:
+                big = grid[nx][ny]
+                tmp_nx, tmp_ny = nx, ny
             move_dir = (move_dir + 1) % 8
-            continue
-        if big < grid[nx][ny]:
-            big = grid[nx][ny]
-            tmp_nx, tmp_ny = nx, ny
-        move_dir = (move_dir + 1) % 8
-    grid[x][y], grid[tmp_nx][tmp_ny] = grid[tmp_nx][tmp_ny], grid[x][y]
+        grid[x][y], grid[tmp_nx][tmp_ny] = grid[tmp_nx][tmp_ny], grid[x][y]
 
 for i in range(n):
     for j in range(n):
