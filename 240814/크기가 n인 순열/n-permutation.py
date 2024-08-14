@@ -1,5 +1,6 @@
 n = int(input())
-visited = [[0] * (n+1)] * (n+1)
+# visited = [[0] * (n+1)] * (n+1)
+visited =[[0 for _ in range(n+1)] for _ in range(n+1)]
 # print(*visited)
 ans = []
 
