@@ -13,7 +13,4 @@ def gang(k, n):
         gang(k-1, n)
         ans.pop()
 
-if k != 1:
-    gang(k, n)
-else:
-    gang(k+n, n)
+gang(k+n, n)
