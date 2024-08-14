@@ -7,7 +7,7 @@ def rc(i):
         return
     for j in range(1, k+1):
         ans.append(j)
-        if len(ans) == n and (len(list(set(ans))) != 1 or len(ans) == 1):
+        if len(ans) == n and (len(list(set(ans))) != 1 or i == 1):
             print(*ans)
         rc(i-1)
         ans.pop()
