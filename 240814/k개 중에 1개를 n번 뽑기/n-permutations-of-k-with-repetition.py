@@ -13,4 +13,4 @@ def gang(k, n):
         gang(k-1, n)
         ans.pop()
 
-gang(k+n, n)
+gang(n, n)
