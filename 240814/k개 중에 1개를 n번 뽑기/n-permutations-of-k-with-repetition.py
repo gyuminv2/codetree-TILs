@@ -3,14 +3,15 @@ k, n = map(int, input().split())
 ans = []
 
 f = k
-def gang(k, n):
-    if k == 0:
+g = n
+def gang(n):
+    if n == 0:
         return
     for i in range(f):
         ans.append(i+1)
-        if len(ans) == n:
+        if len(ans) == g:
             print(*ans)
-        gang(k-1, n)
+        gang(n-1)
         ans.pop()
 
-gang(n, n)
+gang(n)
