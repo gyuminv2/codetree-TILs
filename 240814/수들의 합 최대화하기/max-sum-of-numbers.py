@@ -19,8 +19,7 @@ def per(k):
     global large
     global visited
     if k == n+1:
-        if large < Cal(ans):
-            large = Cal(ans)
+        large = max(large, Cal(ans))
         return
     
     for i in range(n):
