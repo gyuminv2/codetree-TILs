@@ -1,5 +1,5 @@
 n = int(input())
-visited = [0] * (n+1)
+visited = [0 for _ in range(n+1)]
 ans = []
 
 def choose(c):
