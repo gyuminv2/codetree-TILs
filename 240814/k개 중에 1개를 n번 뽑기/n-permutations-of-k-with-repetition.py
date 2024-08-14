@@ -16,4 +16,4 @@ def gang(k, n):
 if k != 1:
     gang(k, n)
 else:
-    gang(k+1, n)
+    gang(k+n, n)
