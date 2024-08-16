@@ -40,5 +40,8 @@ def bfs():
 
 push(0, 0, 0)
 bfs()
-
-print(step[n-1][m-1])
+rtn = step[n-1][m-1]
+if rtn == 0:
+    print(-1)
+else:
+    print(rtn)
