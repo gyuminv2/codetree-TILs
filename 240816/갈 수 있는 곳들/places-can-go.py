@@ -27,11 +27,12 @@ def can_go(x, y):
         return False
     return True
 
+rtn = 0
+
 def push(x, y):
     visited[x][y] = 1
     q.append((x, y))
 
-rtn = 0
 
 def bfs():
     global rtn
@@ -48,7 +49,8 @@ def bfs():
                 rtn += 1
 
 for x, y in zip(loc_x, loc_y):
-    push(x, y)
-    bfs()
-    rtn += 1
+    if visited[x][y] == 0:
+        push(x, y)
+        rtn += 1
+        bfs()
 print(rtn)
