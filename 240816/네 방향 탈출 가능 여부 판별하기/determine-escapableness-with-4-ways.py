@@ -25,15 +25,14 @@ def push(x, y):
     q.append((x, y))
 
 def bfs():
-    dxs = [1, 0, -1, 0]
-    dys = [0, 1, 0, 1]
+    dxs = [-1, 1, 0, 0]
+    dys = [0, 0, -1, 1]
 
     while q:
         x, y = q.popleft()
 
         for dx, dy in zip(dxs, dys):
             nx, ny = x + dx, y + dy
-
             if can_go(nx, ny):
                 push(nx, ny)
 
