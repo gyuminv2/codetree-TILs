@@ -6,18 +6,16 @@ grid = []
 for _ in range(n):
     grid.append(list(map(int, input().split())))
 
-human_x = []
-human_y = []
-point_x = []
-point_y = []
+point = []
 for x in range(n):
     for y in range(n):
-        if grid[x][y] == 2:
-            human_x.append(x)
-            human_y.append(y)
         if grid[x][y] == 3:
-            point_x.append(x)
-            point_y.append(y)
+            point.append((x, y))
+
+
+ans = [[0 for _ in range(n)] for _ in range(n)]
+visited = [[0 for _ in range(n)] for _ in range(n)]
+step = [[0 for _ in range(n)] for _ in range(n)]
 
 q = deque()
 
@@ -33,11 +31,10 @@ def can_go(x, y):
 
 def push(x, y, s):
     visited[x][y] = 1
-    if step[x][y] < s:
-        step[x][y] = s
+    step[x][y] = s
     q.append((x, y))
 
-def bfs(end_x, end_y):
+def bfs():
     dxs = [-1, 1, 0, 0]
     dys = [0, 0, -1, 1]
 
@@ -48,29 +45,17 @@ def bfs(end_x, end_y):
             if can_go(nx, ny):
                 push(nx, ny, step[x][y] + 1)
 
-ans = [[0 for _ in range(n)] for _ in range(n)]
-for s_x, s_y in zip(human_x, human_y):
-    for e_x, e_y in zip(point_x, point_y):
-        visited = [[0 for _ in range(n)] for _ in range(n)]
-        step = [[0 for _ in range(n)] for _ in range(n)]
+for e_x, e_y in point:
+    push(e_x, e_y, 0)
+bfs()
 
-        push(s_x, s_y, step[s_x][s_y])
-        bfs(e_x, e_y)
-        time = step[e_x][e_y]
-        if time == 0:
-            continue
-
-        if ans[s_x][s_y] != 0:
-            tmp = ans[s_x][s_y]
-            if tmp > time:
-                ans[s_x][s_y] = time
+for i in range(n):
+    for j in range(n):
+        if grid[i][j] != 2:
+            print(0, end=" ")
         else:
-            ans[s_x][s_y] = time
-
-    if ans[s_x][s_y] == 0:
-        ans[s_x][s_y] = -1
-
-for x in range(n):
-    for y in range(n):
-        print(ans[x][y], end=' ')
-    print('')
+            if not visited[i][j]:
+                print(-1, end=" ")
+            else:
+                print(step[i][j], end=" ")
+    print()
