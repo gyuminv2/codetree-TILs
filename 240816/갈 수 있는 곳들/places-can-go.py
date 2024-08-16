@@ -6,9 +6,12 @@ grid = []
 for _ in range(n):
     grid.append(list(map(int, input().split())))
 
-loc = []
+loc_x = []
+loc_y = []
 for _ in range(k):
-    loc.append(list(map(int, input().split())))
+    x, y = map(int, input().split())
+    loc_x.append(x-1)
+    loc_y.append(y-1)
 
 visited = [[0 for _ in range(n)] for _ in range(n)]
 
@@ -44,7 +47,8 @@ def bfs():
                 push(nx, ny)
                 rtn += 1
 
-push(0, 0)
-rtn += 1
-bfs()
+for x, y in zip(loc_x, loc_y):
+    push(x, y)
+    bfs()
+    rtn += 1
 print(rtn)
