@@ -51,7 +51,7 @@ def bfs(end_x, end_y):
                 if nx == end_x and ny == end_y:
                     rtn = 1
 
-ans = [[99999 for _ in range(n)] for _ in range(n)]
+ans = [[0 for _ in range(n)] for _ in range(n)]
 
 for s_x, s_y in zip(human_x, human_y):
     for e_x, e_y in zip(point_x, point_y):
@@ -61,16 +61,17 @@ for s_x, s_y in zip(human_x, human_y):
         push(s_x, s_y, step[s_x][s_y])
         bfs(e_x, e_y)
         time = step[e_x][e_y]
-        if ans[s_x][s_y] > time:
+        if ans[s_x][s_y] != 0:
+            tmp = ans[s_x][s_y]
+            if tmp > time:
+                ans[s_x][s_y] = time
+        else:
             ans[s_x][s_y] = time
-        elif time == 0:
+        if time == 0:
             ans[s_x][s_y] = -1
 
 for x in range(n):
     for y in range(n):
-        if ans[x][y] == 99999:
-            print(0, end=' ')
-        else:
-            print(ans[x][y], end=' ')
+        print(ans[x][y], end=' ')
 
     print('')
