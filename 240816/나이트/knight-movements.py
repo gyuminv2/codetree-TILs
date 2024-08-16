@@ -40,8 +40,13 @@ def bfs():
             if can_go(nx, ny):
                 push(nx, ny, step[x][y] + 1)
 
-push(x1, y1, step[x1][y1])
-bfs()
+if x1 == x2 and y1 == y2:
+    print(0)
+    exit()
+else:
+    push(x1, y1, step[x1][y1])
+    bfs()
+
 if step[x2][y2] == 0:
     print(-1)
 else:
