@@ -27,8 +27,8 @@ def dfs(x, y):
 
     visited[x][y] = 1
     order += 1
-    dxs = [1, 0, 0]
-    dys = [0, 1, -1]
+    dxs = [1, 0, -1, 0]
+    dys = [0, 1, 0, -1]
 
     for dx, dy in zip(dxs, dys):
         nx, ny = x + dx, y + dy
