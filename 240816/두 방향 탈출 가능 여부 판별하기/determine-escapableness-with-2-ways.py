@@ -16,6 +16,7 @@ def can_go(x, y):
         return False
     return True
 
+result = 0
 def dfs(x, y):
     global result
 
@@ -33,7 +34,6 @@ def dfs(x, y):
             dfs(nx, ny)
 
 dfs(0, 0)
-print(*visited)
 if result == 1:
     print(1)
 else:
