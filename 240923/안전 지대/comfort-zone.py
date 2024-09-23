@@ -1,4 +1,8 @@
+import sys
+
 n, m = map(int, input().split())
+
+sys.setrecursionlimit(2**12)
 
 graph = []
 for _ in range(n):
