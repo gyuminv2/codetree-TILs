@@ -11,6 +11,7 @@ def dfs(v):
     for i in graph[v]:
         if not visited[i]:
             cnt += 1
+            visited[i] = True
             dfs(i)
 
 for _ in range(m):
@@ -18,7 +19,7 @@ for _ in range(m):
     graph[s].append(e)
     graph[e].append(s)
 
-visited[v] = True
+visited[1] = True
 dfs(1)
 
 print(cnt)
