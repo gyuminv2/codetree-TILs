@@ -4,10 +4,11 @@ graph = []
 for _ in range(n):
     graph.append(list(map(int, input().split())))
 
-visited = [[0 for _ in range(n)] for _ in range(n)]
+visited = [[False for _ in range(n)] for _ in range(n)]
 
-dxs = [0, 1]
-dys = [1, 0]
+# down, right, up, left
+dxs = [0, 1, 0, -1]
+dys = [1, 0, -1, 1]
 
 def in_range(x, y):
     return 0 <= x and x < n and 0 <= y and y < n
@@ -23,11 +24,11 @@ def can_go(x, y):
 
 def dfs(x, y):
     global cnt
-    visited[x][y] = 1
+    visited[x][y] = True
     cnt += 1
     
     for dx, dy in zip(dxs, dys):
-        nx, ny = dx + x, dy +y
+        nx, ny = dx + x, dy + y
         if can_go(nx, ny):
             dfs(nx, ny)
 
@@ -37,7 +38,7 @@ cnt = 0
 
 for i in range(n):
     for j in range(n):
-        if graph[i][j] == 1 and visited[i][j] == 0:
+        if graph[i][j] == 1 and visited[i][j] == False:
             dfs(i, j)
             vlg.append(cnt)
             cnt = 0
