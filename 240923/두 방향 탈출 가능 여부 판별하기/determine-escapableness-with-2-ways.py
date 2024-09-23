@@ -30,7 +30,4 @@ def dfs(x, y):
 
 dfs(0, 0)
 
-if visited[n-1][m-1] == 1:
-    print(1)
-else:
-    print(0)
+print(visited[n-1][m-1])
