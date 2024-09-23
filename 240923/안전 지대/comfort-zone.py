@@ -43,7 +43,7 @@ for k in range(1, 101):
                 home_cnt += 1
     safe_area.append((k, home_cnt))
 
-tmp = [0, 0]
+tmp = [1, 0]
 for i in safe_area:
     if tmp[1] < i[1]:
         tmp[0] = i[0]
