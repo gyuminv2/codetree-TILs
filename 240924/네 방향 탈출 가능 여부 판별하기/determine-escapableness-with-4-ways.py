@@ -40,7 +40,7 @@ def push(x, y):
 push(0, 0)
 bfs()
 
-if visited[n-1][n-1] == 1:
+if visited[n-1][m-1] == 1:
     print(1)
 else:
     print(0)
