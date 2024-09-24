@@ -26,18 +26,17 @@ def can_go(x, y):
 def dfs(x, y):
     global tmp_block
     visited[x][y] = True
+    tmp_block += 1
 
     for dx, dy in zip(dxs, dys):
         nx, ny = dx + x, dy + y
         if can_go(nx, ny):
             if graph[x][y] == graph[nx][ny]:
                 dfs(nx, ny)
-                tmp_block += 1
 
 for i in range(n):
     for j in range(n):
         if visited[i][j] == False:
-            tmp_block += 1
             dfs(i, j)
             if tmp_block >= 4:
                 num_block += 1
