@@ -14,7 +14,7 @@ dxs = [0, 0, -1, 1]
 dys = [-1, 1, 0, 0]
 
 def in_range(x, y):
-    return 0 <= x and x < m and 0 <= y and y < n 
+    return 0 <= x and x < n and 0 <= y and y < m
 
 def can_go(x, y):
     if not in_range(x, y):
