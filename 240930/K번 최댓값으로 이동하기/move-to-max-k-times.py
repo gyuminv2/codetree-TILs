@@ -23,18 +23,17 @@ def in_range(x, y):
     return 0 <= x and x < n and 0 <= y and y < n
 
 def can_go(x, y):
+    global ch
     if not in_range(x, y):
         return False
     if graph[x][y] >= pivot:
         return False
     if visited[x][y] == graph[x][y]:
         return False
-    if k == 0:
-        return False
     return True
 
 def bfs():
-    global k
+    global cp
     while q:
         x, y = q.popleft()
 
@@ -42,6 +41,7 @@ def bfs():
             nx, ny = dx + x, dy + y
             if can_go(nx, ny):
                 push(nx, ny)
+                cp = 1
 
 def find_next_loc(visited):
     tmp = 0
@@ -62,13 +62,19 @@ bfs()
 result.append((x-1, y-1))
 for _ in range(k):
     x, y = find_next_loc(visited)
+    # print(x, y, pivot, graph[x][y])
     if graph[x][y] == pivot:
         break
     pivot = graph[x][y]
+    cp = 0
     visited = [[0 for _ in range(n)] for _ in range(n)]
     push(x, y)
     bfs()
-    result.append((x, y))
+    if cp == 1:
+        result.append((x, y))
+    else:
+        result.append((x, y))
+        break
 
 x, y = result[-1][0], result[-1][1]
 print(x+1, y+1)
