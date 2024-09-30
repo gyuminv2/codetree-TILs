@@ -59,6 +59,7 @@ result = []
 visited = [[0 for _ in range(n)] for _ in range(n)]
 push(x-1, y-1)
 bfs()
+result.append((x-1, y-1))
 for _ in range(k):
     x, y = find_next_loc(visited)
     if graph[x][y] == pivot:
