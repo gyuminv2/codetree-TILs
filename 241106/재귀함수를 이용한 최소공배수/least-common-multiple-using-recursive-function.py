@@ -1,6 +1,6 @@
 from math import gcd 
 
-def solution(arr):                           # 최대공약수를 구하는 gcd() import
+def solution(arr):
     answer = arr[0]                                 # answer을 arr[0]으로 초기화
 
     for num in arr:                                 # 반복문을 처음부터 끝까지 돈다.
