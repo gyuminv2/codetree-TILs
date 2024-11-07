@@ -1,6 +1,6 @@
 n = int(input())
 
-tile = [-1 for _ in range(12)]
+tile = [-1 for _ in range(1000)]
 arr = []
 for i in range(n):
     arr.append(input().split())
