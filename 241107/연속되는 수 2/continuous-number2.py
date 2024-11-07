@@ -12,6 +12,7 @@ for i in range(n):
     else:
         cnt_arr.append(cnt)
         cnt = 0
+cnt_arr.append(cnt)
 
 if not cnt_arr:
     print(1)
