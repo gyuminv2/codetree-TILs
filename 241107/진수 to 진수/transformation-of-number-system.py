@@ -10,12 +10,9 @@ for i in range(len(n)):
     cn //= 10
     base_10 += tr * a**i
 
-base_2 = ''
+base_b = ''
 while base_10 != 0:
-    if base_10 % b != 0:
-        base_2 += '1'
-    else:
-        base_2 += '0'
+    base_b += str(base_10%b)
     base_10 //= b
 
-print(base_2)
+print(base_b)
