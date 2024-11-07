@@ -15,30 +15,52 @@ def diff(arr, i):
     elif a > arr[i-1][2]:
         a = arr[i-1][2]
     
-    # if b < arr[i-1][0]:
-    #     b = arr[i-1][0]
-    # elif b > arr[i-1][2]:
-    #     b = arr[i-1][2]
+    if b < arr[i-1][0]:
+        b = arr[i-1][0]
+    elif b > arr[i-1][2]:
+        b = arr[i-1][2]
 
     if c < arr[i-1][1]:
         c = arr[i-1][1]
     elif c > arr[i-1][3]:
         c = arr[i-1][3]
 
-    # if d < arr[i-1][1]:
-    #     d = arr[i-1][1]
-    # elif d > arr[i-1][3]:
-    #     d = arr[i-1][3]
+    if d < arr[i-1][1]:
+        d = arr[i-1][1]
+    elif d > arr[i-1][3]:
+        d = arr[i-1][3]
 
     return(abs(b-a)*abs(d-c))
 
+def in_range(arr, i):
+    a = arr[i][0]
+    b = arr[i][2]
+    c = arr[i][1]
+    d = arr[i][3]
+
+    if (b > arr[i-1][0] and b < arr[i-1][2]) and (d > arr[i-1][1] and d < arr[i-1][3]):
+        return 0
+    elif (b > arr[i-1][0] and b < arr[i-1][2]) or (d > arr[i-1][1] and d < arr[i-1][3]):
+        return 1
+    else:
+        return 2
+
 blue = 0
+tp = 0
 for i in range(len(arr)):
     if i == 0 :
         continue
-    if i % 2 == 0:
+    elif i == 1 :
+        blue += abs(arr[i][2] - arr[i][0]) * abs(arr[i][3] - arr[i][1])
+        continue
+    elif i % 2 == 0:
         blue -= diff(arr, i)
     else:
-        blue += abs(arr[i][2] - arr[i][0]) * abs(arr[i][3] - arr[i][1])
+        if in_range(arr, i) == 0:
+            blue += diff(arr, i)
+        elif in_range(arr, i) == 1:
+            blue += diff(arr, i)
+        else:
+            blue += abs(arr[i][2] - arr[i][0]) * abs(arr[i][3] - arr[i][1])
 
 print(blue)
