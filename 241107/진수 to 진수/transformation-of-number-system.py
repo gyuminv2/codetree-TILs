@@ -15,4 +15,4 @@ while base_10 != 0:
     base_b += str(base_10%b)
     base_10 //= b
 
-print(base_b)
+print(base_b[::-1])
