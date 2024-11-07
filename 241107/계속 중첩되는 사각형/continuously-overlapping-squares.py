@@ -1,66 +1,21 @@
+# 좌표 평면의 크기 정의 (-100 <= x, y <= 100 이므로 200x200 크기의 배열을 사용)
+OFFSET = 100  # 좌표의 범위가 -100 ~ 100이므로, 0 ~ 200 인덱스를 사용하기 위해 오프셋 적용
+plane = [[0] * 201 for _ in range(201)]  # 0: 없음, 1: 빨간색, 2: 파란색
+
+def calculate_blue_area(rectangles):
+    for i, (x1, y1, x2, y2) in enumerate(rectangles):
+        color = 1 if i % 2 == 0 else 2  # 짝수 인덱스 -> 빨간색(1), 홀수 인덱스 -> 파란색(2)
+        for x in range(x1 + OFFSET, x2 + OFFSET):
+            for y in range(y1 + OFFSET, y2 + OFFSET):
+                plane[x][y] = color  # 현재 색상으로 덮음
+
+    # 파란색 영역의 넓이 계산
+    blue_area = sum(1 for x in range(201) for y in range(201) if plane[x][y] == 2)
+    return blue_area
+
+# 입력 받기
 n = int(input())
+rectangles = [tuple(map(int, input().split())) for _ in range(n)]
 
-arr = []
-for _ in range(n):
-    arr.append(list(map(int, input().split())))
-
-def diff(arr, i):
-    a = arr[i][0]
-    b = arr[i][2]
-    c = arr[i][1]
-    d = arr[i][3]
-    
-    if a < arr[i-1][0]:
-        a = arr[i-1][0]
-    elif a > arr[i-1][2]:
-        a = arr[i-1][2]
-    
-    if b < arr[i-1][0]:
-        b = arr[i-1][0]
-    elif b > arr[i-1][2]:
-        b = arr[i-1][2]
-
-    if c < arr[i-1][1]:
-        c = arr[i-1][1]
-    elif c > arr[i-1][3]:
-        c = arr[i-1][3]
-
-    if d < arr[i-1][1]:
-        d = arr[i-1][1]
-    elif d > arr[i-1][3]:
-        d = arr[i-1][3]
-
-    return(abs(b-a)*abs(d-c))
-
-def in_range(arr, i):
-    a = arr[i][0]
-    b = arr[i][2]
-    c = arr[i][1]
-    d = arr[i][3]
-
-    if (b > arr[i-1][0] and b < arr[i-1][2]) and (d > arr[i-1][1] and d < arr[i-1][3]):
-        return 0
-    elif (b > arr[i-1][0] and b < arr[i-1][2]) or (d > arr[i-1][1] and d < arr[i-1][3]):
-        return 1
-    else:
-        return 2
-
-blue = 0
-tp = 0
-for i in range(len(arr)):
-    if i == 0 :
-        continue
-    elif i == 1 :
-        blue += abs(arr[i][2] - arr[i][0]) * abs(arr[i][3] - arr[i][1])
-        continue
-    elif i % 2 == 0:
-        blue -= diff(arr, i)
-    else:
-        if in_range(arr, i) == 0:
-            blue += diff(arr, i)
-        elif in_range(arr, i) == 1:
-            blue += diff(arr, i)
-        else:
-            blue += abs(arr[i][2] - arr[i][0]) * abs(arr[i][3] - arr[i][1])
-
-print(blue)
+# 결과 출력
+print(calculate_blue_area(rectangles))
