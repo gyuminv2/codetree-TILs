@@ -12,6 +12,8 @@ for i in range(n-1):
 ret.sort()
 mins = 100
 for i in ret:
-    if s - i < mins:
-        mins = s - i
+    if i - s < mins:
+        if i - s < 0:
+            continue
+        mins = i - s
 print(mins)
