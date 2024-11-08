@@ -15,24 +15,20 @@ ret = []
 ret.append(grid[s][s])
 
 def in_range(x, y):
-    return 0 <= x and x < n and 0 <= y and y < n
+    return 0 <= x < n and 0 <= y < n
 
 def letsGo():
     cur = [s, s, 0]
     for i in range(t):
         if cmd[i] == 'R':
-            cur[2] = dirs[(cur[2]+1)%4]
+            cur[2] = (cur[2]+1)%4
         elif cmd[i] == 'L':
-            cur[2] = dirs[(cur[2]-1)%4]
+            cur[2] = (cur[2]+3)%4
         else :
-            dx = cur[0] + dxs[dirs[cur[2]]]
-            dy = cur[1] + dys[dirs[cur[2]]]
-            if in_range(dx, dy):
-                cur[0] = dx
-                cur[1] = dy
-                if ret[-1] == grid[dy][dx]:
-                    continue
-                else:
-                    ret.append(grid[dy][dx])
+            nx = cur[0] + dxs[dirs[cur[2]]]
+            ny = cur[1] + dys[dirs[cur[2]]]
+            if in_range(nx, ny):
+                cur[0], cur[1] = nx, ny
+                ret.append(grid[ny][nx])
 letsGo()
 print(sum(ret))
