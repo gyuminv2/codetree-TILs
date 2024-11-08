@@ -30,14 +30,14 @@ def letsGo():
         elif cmd[i] == 'L':
             cur[2] = dirs[cur[2]-1]
         else :
-            dx = cur[0] + dys[dirs[cur[2]]]
-            dy = cur[1] + dxs[dirs[cur[2]]]
+            dx = cur[0] + dxs[dirs[cur[2]]]
+            dy = cur[1] + dys[dirs[cur[2]]]
             if in_range(dx, dy):
                 cur[0] = dx
                 cur[1] = dy
-                if ret[-1] == grid[dx][dy]:
+                if ret[-1] == grid[dy][dx]:
                     continue
                 else:
-                    ret.append(grid[dx][dy])
+                    ret.append(grid[dy][dx])
 letsGo()
 print(sum(ret))
