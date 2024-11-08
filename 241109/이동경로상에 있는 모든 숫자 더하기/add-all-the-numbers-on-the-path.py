@@ -35,9 +35,9 @@ def letsGo():
             if in_range(dx, dy):
                 cur[0] = dx
                 cur[1] = dy
-            if ret[-1:] == grid[cur[0]][cur[1]]:
-                continue
-            else:
-                ret.append(grid[cur[0]][cur[1]])
+                if ret[-1] == grid[cur[0]][cur[1]]:
+                    continue
+                else:
+                    ret.append(grid[cur[0]][cur[1]])
 letsGo()
 print(sum(ret))
