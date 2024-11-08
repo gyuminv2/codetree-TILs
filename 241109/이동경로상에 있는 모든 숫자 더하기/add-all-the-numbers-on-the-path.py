@@ -23,7 +23,10 @@ def letsGo():
     cur = [s, s, 0]
     for i in range(t):
         if cmd[i] == 'R':
-            cur[2] = dirs[cur[2]+1]
+            if cur[2] + 1 == 4:
+                cur[2] = dirs[0]
+            else :
+                cur[2] = dirs[cur[2]+1]
         elif cmd[i] == 'L':
             cur[2] = dirs[cur[2]-1]
         else :
