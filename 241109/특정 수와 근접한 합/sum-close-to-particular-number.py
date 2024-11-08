@@ -7,7 +7,11 @@ for i in range(n-1):
     for j in range(i+1, n):
         b = arr[j]
         tp = sum(arr) - (a+b)
-        ret.append(tp-s)
+        ret.append(tp)
 
 ret.sort()
-print(ret[0])
+mins = 100
+for i in ret:
+    if s - i < mins:
+        mins = s - i
+print(mins)
