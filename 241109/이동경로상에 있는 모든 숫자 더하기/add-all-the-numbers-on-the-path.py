@@ -15,7 +15,7 @@ ret = []
 ret.append(grid[s][s])
 
 def in_range(dx, dy):
-    if dx >= n or dy >= n:
+    if dx >= n or dy >= n or dx < 0 or dy < 0:
         return 0
     return 1
 
