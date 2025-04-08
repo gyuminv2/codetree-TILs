@@ -62,7 +62,6 @@ for _ in range(k):
         for j in range(3):                      # 열 좌표
             for i in range(3):                  # 행 좌표
                 n_grid = [x[:] for x in grid]     # 복사
-                print(n_grid)
                 for _ in range(r):
                     n_grid = rotate(n_grid, i, j)
                 
