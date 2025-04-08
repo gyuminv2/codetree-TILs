@@ -9,15 +9,15 @@ def golem_move(ci, di, p):
         ci -= 1
         di = (di-1)%4
         i += 1
-    while grid[i+2][ci] == 0 and grid[i+1][ci-1] == 0 and grid[i+1][ci+1] == 0:
-        i += 1
+        while grid[i+2][ci] == 0 and grid[i+1][ci-1] == 0 and grid[i+1][ci+1] == 0:
+            i += 1
     # 동쪽 (오오, 아오, 아오오, 아아오, 위오) (출구 시계)
     while grid[i][ci+2] == 0 and grid[i+1][ci+1] == 0 and grid[i+1][ci+2] == 0 and grid[i+2][ci+1] == 0 and grid[i-1][ci+1] == 0:
         ci += 1
         di = (di+1)%4
         i +=1
-    while grid[i+2][ci] == 0 and grid[i+1][ci-1] == 0 and grid[i+1][ci+1] == 0:
-        i += 1
+        while grid[i+2][ci] == 0 and grid[i+1][ci-1] == 0 and grid[i+1][ci+1] == 0:
+            i += 1
     # 초기화
     if (i-1) <= 2:
         end_points = []
@@ -65,9 +65,6 @@ def tinkerbell_move(grid, si, sj, p):
                 if (grid[ci][cj] == grid[ni][nj]) or (grid[ci][cj] < 0) or (grid[ci][cj] == -grid[ni][nj]):
                     v[ni][nj] = 1
                     q.append((ni, nj))
-    # for q in v:
-    #     print(*q)
-    # print (mx_ci-2)
     return mx_ci-2
 
 ####################
@@ -96,6 +93,4 @@ for ci, di in golem:
     if f != 0:
         ans += tinkerbell_move(grid, si, sj, p)
     p += 1
-    # for g in grid:
-    #     print(g)
 print(ans)
