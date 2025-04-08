@@ -1,22 +1,22 @@
 
 def golem_move(ci, di, p):
     # 남쪽 (아아, 아왼, 아오)
-    i = 0
-    while (grid[i+2][ci] + grid[i+1][ci-1] + grid[i+1][ci+1]) == 0:
+    i = 1
+    while grid[i+2][ci] == 0 and grid[i+1][ci-1] == 0 and grid[i+1][ci+1] == 0:
         i += 1
-    # 서쪽 (왼왼, 아왼, 아왼왼, 아아왼) (출구 반시계방향)
-    while (grid[i][ci-2] + grid[i+1][ci-1] + grid[i+1][ci-2] + grid[i+2][ci-1]) == 0:
+    # 서쪽 (왼왼, 아왼, 아왼왼, 아아왼, 위왼) (출구 반시계방향)
+    while grid[i][ci-2] == 0 and grid[i+1][ci-1] == 0 and grid[i+1][ci-2] == 0 and grid[i+2][ci-1] == 0 and grid[i-1][ci-1] == 0:
         ci -= 1
         di = (di-1)%4
         i += 1
-    while (grid[i+2][ci] + grid[i+1][ci-1] + grid[i+1][ci+1]) == 0:
+    while grid[i+2][ci] == 0 and grid[i+1][ci-1] == 0 and grid[i+1][ci+1] == 0:
         i += 1
-    # 동쪽 (오오, 아오, 아오오, 아아오) (출구 시계)
-    while (grid[i][ci+2] + grid[i+1][ci+1] + grid[i+1][ci+2] + grid[i+2][ci+1]) == 0:
+    # 동쪽 (오오, 아오, 아오오, 아아오, 위오) (출구 시계)
+    while grid[i][ci+2] == 0 and grid[i+1][ci+1] == 0 and grid[i+1][ci+2] == 0 and grid[i+2][ci+1] == 0 and grid[i-1][ci+1] == 0:
         ci += 1
         di = (di+1)%4
         i +=1
-    while (grid[i+2][ci] + grid[i+1][ci-1] + grid[i+1][ci+1]) == 0:
+    while grid[i+2][ci] == 0 and grid[i+1][ci-1] == 0 and grid[i+1][ci+1] == 0:
         i += 1
     # 초기화
     if (i-1) <= 2:
