@@ -96,6 +96,8 @@ def boom(idx, dr, flg, flow):
             boom(grid[nx][ny], dr, 'a', 1)
         grid[nx][ny] = grid[x][y]
         santa[idx][0][0], santa[idx][0][1] = nx, ny
+        if (x, y) != (nx, ny):
+            grid[x][y] = 0
     else:   # 종료
         santa[idx][2] = 1
         grid[x][y] = 0
@@ -171,7 +173,6 @@ def s_move(ri, rj):
             # nsi, nsj : 다음 산타 좌표
             if grid[nsi][nsj] == -1:
                 boom(i, direct, 's', 0)
-                grid[si][sj] = 0
             else:               # 빈칸이면
                 grid[nsi][nsj] = i
                 grid[si][sj] = 0
