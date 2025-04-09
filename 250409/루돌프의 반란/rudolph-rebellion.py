@@ -91,7 +91,7 @@ def boom(idx, dr, flg, flow):
     # print('밀려난 좌표 :', nx, ny)
     if in_range(nx, ny):
         # 다른 산타가 있을 경우
-        if grid[nx][ny] != 0:
+        if grid[nx][ny] != 0 and (x, y) != (nx, ny):
             # print(grid[nx][ny], ' 산타 좌표(다음) :', nx, ny)
             boom(grid[nx][ny], dr, 'a', 1)
         grid[nx][ny] = grid[x][y]
