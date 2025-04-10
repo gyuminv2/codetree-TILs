@@ -25,21 +25,20 @@ def knight_move(idx, dr):
                     attack[nidx] += 1
 
         # 겹치는 기사가 있다면 q에 추가 (모든 기사 탐색)
-        for idx in knight:
+        for sidx in knight:
             # 이미 움직일 대상 체크 X
-            if idx in nset:
-                continue
-            ti, tj, th, tw, _ = knight[idx]
-            if ni <= ti+th-1 and ni+h-1 >= ti and nj+w-1 >= tj and nj <= tj+tw-1:
-                q.append(idx)
-                nset.add(idx)
+            if sidx in nset: continue
             
+            ti, tj, th, tw, _ = knight[sidx]
+            if ni <= ti+th-1 and ni+h-1 >= ti and nj+w-1 >= tj and nj <= tj+tw-1:
+                q.append(sidx)
+                nset.add(sidx)
+    # attack[idx] = 0
     # 움직임
     for idx in nset:
         si, sj, h, w, k = knight[idx]
         if k <= attack[idx]:
-            # knight.pop(idx)
-            knight[idx][4] = 0
+            knight.pop(idx)
         else:
             ni, nj = si + dis[dr], sj + djs[dr]
             knight[idx] = [ni, nj, h, w, k - attack[idx]]
@@ -67,12 +66,9 @@ djs = [0, 1, 0, -1]
 # 메인 로직
 for idx, dr in cmd:
     # 죽은 기사 건너뛰기
-    if knight[idx][4] <= 0:
-        continue
-
     knight_move(idx, dr)
         
 ans = 0
-for i in range(1, N+1):
+for i in knight:
     ans += init_damage[i] - knight[i][4]
 print(ans)
