@@ -92,12 +92,11 @@ def find_attacker(sequence):
                     return can[i]
         # 여기까지 왔다는 건, 최근 공격 포탑도 동일
         can.sort(key = lambda x : (x[2], -(x[0]+x[1]), -x[1]))
-        # print(*can)
         return can[0]
     else:
         return candidate[0]
 
-def find_target(attacker, sequence):
+def find_target(attacker, old):
     candidate = []
     ai, aj = attacker[0], attacker[1]
     mn_t = -1
@@ -117,7 +116,6 @@ def find_target(attacker, sequence):
         for i in range(len(candidate)):
             if mn_t == candidate[i][2]:
                 can.append(candidate[i])
-
         # 중복 처리
         for oi, oj in old:
             for i in range(len(can)):
@@ -158,12 +156,12 @@ old = []
 for i in range(N):
     for j in range(M):
         old.append((i, j))
+old.sort(key = lambda x : (x[0]+x[1], x[1]))
 for _ in range(K):
     if left_one():
         break
 
     a = find_attacker(sequence)
-    # print('attacker:', a)
 
     old.pop(old.index((a[0], a[1])))
     old.append((a[0], a[1]))
@@ -171,21 +169,14 @@ for _ in range(K):
     grid[a[0]][a[1]] += handicap
     a[2] += handicap
 
-    t = find_target(a, sequence)
-    # print('target:', t)
+    t = find_target(a, old)
     route = find_route(a, t)
-    # print('[route]', *route)
     if route:
-        # print('레이저')
         lazer(route, t[0], t[1], a[2])
         repair(route, a[0], a[1])
     else:
-        # print('포탄')
         route = boomb(a, t, a[2])
         repair(route, a[0], a[1])
-    # print('MAP')
-    # for g in grid:
-    #     print(*g)
 
 rtn = 0
 for i in range(N):
