@@ -88,10 +88,11 @@ def find_attacker(sequence):
         for si, sj in seq:
             for i in range(len(can)):
                 ci, cj = can[i][0], can[i][1]
-                if (si, cj) == (ci, cj):
+                if (si, sj) == (ci, cj):
                     return can[i]
         # 여기까지 왔다는 건, 최근 공격 포탑도 동일
         can.sort(key = lambda x : (x[2], -(x[0]+x[1]), -x[1]))
+        # print(*can)
         return can[0]
     else:
         return candidate[0]
