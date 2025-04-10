@@ -18,24 +18,18 @@ def boomb(a, t, damage):
         ni, nj = ti + dis[dr], tj + djs[dr]
         ni, nj = is_nxt_go(ni, nj)
         if grid[ni][nj] != 0 and (ni, nj) != (ai, aj):
-            if grid[ni][nj] - half < 0:
-                grid[ni][nj] = 0
-            else:
-                grid[ni][nj] = grid[ni][nj] - half
+            grid[ni][nj] = max(grid[ni][nj] - half, 0)
             route.append((ni, nj))
-    if grid[ti][tj] - damage < 0:
-        grid[ti][tj] = 0
-    else:
-        grid[ti][tj] -= damage
+    grid[ti][tj] = max(grid[ti][tj] - damage, 0)
     return route
 
 def lazer(route, ti, tj, damage):
     half = damage//2
     for i, j in route:
         if (i, j) == (ti, tj):
-            grid[i][j] -= damage
+            grid[i][j] = max(grid[i][j] - damage, 0)
         else:
-            grid[i][j] -= half
+            grid[i][j] = max(grid[i][j] - half, 0)
 
 def is_nxt_go(x, y):
     if y < 0:           # 왼쪽 -> 오른쪽
@@ -86,15 +80,19 @@ def find_attacker(sequence):
                 candidate.append([i, j, grid[i][j]])
     seq = sequence[::-1]
     if len(candidate) > 1:
+        can = []
+        for i in range(len(candidate)):
+            if mn_a == candidate[i][2]:
+                can.append(candidate[i])
         # 중복 처리
         for si, sj in seq:
-            for i in range(len(candidate)):
-                ci, cj = candidate[i][0], candidate[i][1]
+            for i in range(len(can)):
+                ci, cj = can[i][0], can[i][1]
                 if (si, cj) == (ci, cj):
-                    return candidate[i]
+                    return can[i]
         # 여기까지 왔다는 건, 최근 공격 포탑도 동일
-        candidate.sort(key = lambda x : (x[2], -(x[0]+x[1]), -x[1]))
-        return candidate[0]
+        can.sort(key = lambda x : (x[2], -(x[0]+x[1]), -x[1]))
+        return can[0]
     else:
         return candidate[0]
 
@@ -109,20 +107,25 @@ def find_target(attacker, sequence):
             # 공격자 제외
             if (ai, aj) == (i, j):
                 continue
-            # attacker 후보 찾기
+            # target 후보 찾기
             if mn_t <= grid[i][j]:
                 mn_t = grid[i][j]
                 candidate.append([i, j, grid[i][j]])
     if len(candidate) > 1:
+        can = []
+        for i in range(len(candidate)):
+            if mn_t == candidate[i][2]:
+                can.append(candidate[i])
+
         # 중복 처리
-        for si, sj in sequence:
-            for i in range(len(candidate)):
-                ci, cj = candidate[i][0], candidate[i][1]
-                if (si, sj) == (ci, cj):
-                    return candidate[i]
+        for oi, oj in old:
+            for i in range(len(can)):
+                ci, cj = can[i][0], can[i][1]
+                if (oi, oj) == (ci, cj):
+                    return can[i]
         # 여기까지 왔다는 건, 최근 공격 포탑도 동일
-        candidate.sort(key = lambda x : (-x[2], x[0]+x[1], x[1]))
-        return candidate[0]
+        can.sort(key = lambda x : (-x[2], x[0]+x[1], x[1]))
+        return can[0]
     else:
         return candidate[0]
 
@@ -150,30 +153,41 @@ handicap = N+M
 
 # 공격 순서 저장
 sequence = []
+old = []
+for i in range(N):
+    for j in range(M):
+        old.append((i, j))
 for _ in range(K):
     if left_one():
         break
 
     a = find_attacker(sequence)
-    
+    # print('attacker:', a)
+
+    old.pop(old.index((a[0], a[1])))
+    old.append((a[0], a[1]))
     sequence.append((a[0], a[1]))
     grid[a[0]][a[1]] += handicap
     a[2] += handicap
-    # print(a)
 
     t = find_target(a, sequence)
-    # print(t)
+    # print('target:', t)
     route = find_route(a, t)
-    # print(*route)
+    # print('[route]', *route)
     if route:
+        # print('레이저')
         lazer(route, t[0], t[1], a[2])
         repair(route, a[0], a[1])
     else:
+        # print('포탄')
         route = boomb(a, t, a[2])
         repair(route, a[0], a[1])
+    # print('MAP')
     # for g in grid:
     #     print(*g)
 
-a = find_attacker(sequence)
-t = find_target(a, sequence)
-print(max(a[2], t[2]))
+rtn = 0
+for i in range(N):
+    for j in range(M):
+        rtn = max(rtn, grid[i][j])
+print(rtn)
