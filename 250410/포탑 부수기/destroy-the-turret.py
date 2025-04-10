@@ -48,7 +48,7 @@ def in_range(x, y):
 from collections import deque
 def find_route(a, t):
     route = []
-    v = [[0] * N for _ in range(M)]
+    v = [[0] * M for _ in range(N)]
     q = deque([(a[0], a[1], route)])
     v[a[0]][a[1]] = 1
 
