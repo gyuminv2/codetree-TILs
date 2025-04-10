@@ -66,7 +66,8 @@ djs = [0, 1, 0, -1]
 # 메인 로직
 for idx, dr in cmd:
     # 죽은 기사 건너뛰기
-    knight_move(idx, dr)
+    if idx in knight:
+        knight_move(idx, dr)
         
 ans = 0
 for i in knight:
