@@ -6,12 +6,12 @@ def move_man(idx):
     if (mi, mj) == (-1, -1):
         for i, j, x in save_man:
             if idx == x:
-                # print('여기다!')
+                # print('여기다! idx', idx)
                 mi, mj = i, j
                 flg = 2
+                save_man.pop(save_man.index((i, j, x)))
                 break
 
-    # print(grid[mi][mj])
     ci, cj = find_cu(-idx)
     ri, rj = mi, mj
     # man의 초기 이동일 경우 -> (현재 위치 값 : idx => 999로 변경 (원래 베이스캠프 위치로..))
@@ -19,19 +19,19 @@ def move_man(idx):
         flg = 1
         base_camp.pop(base_camp.index([mi, mj]))
     
-    mn_dist = abs(mi-ci) + abs(mj-cj)
+    mn_dist = bfs(mi, mj, ci, cj)[2]
     for dr in [0, 1, 2, 3]:
         ni, nj = mi + dis[dr], mj + djs[dr]
-        dist = abs(ni-ci) + abs(nj-cj)
         # 격자 체크 (0보다 크면 안됨)
-        if 0<=ni<n and 0<=nj<n and grid[ni][nj] <= 0:
+        if 0<=ni<n and 0<=nj<n and grid[ni][nj] <= 30:
+            dist = bfs(ni, nj, ci, cj)[2]
             # 편의점 도착
             if (ni, nj) == (ci, cj):
                 if flg == 1:
                     grid[mi][mj] = 999
                 elif flg != 2:
                     grid[mi][mj] = 0
-                grid[ni][nj] = idx
+                grid[ni][nj] = idx+50
                 return 1
             if mn_dist > dist:
                 mn_dist = dist
@@ -46,6 +46,7 @@ def move_man(idx):
             save_man.append((ri, rj, idx))
     # for v in grid:
     #     print(*v)
+    # print('누구니', idx, (mi, mj), (ri, rj))
     return 0
 
 
@@ -65,7 +66,7 @@ def bfs(si, sj, ei, ej):
         for dr in [0, 1, 2, 3]:
             ni, nj = si + dis[dr], sj + djs[dr]
             # 안되면 grid 조건 제외하고 해보삼
-            if 0<=ni<n and 0<=nj<n and v[ni][nj] == 0 and grid[ni][nj] <= 0:    # or [ni, nj, _] in save_man):
+            if 0<=ni<n and 0<=nj<n and v[ni][nj] == 0 and grid[ni][nj] <= 30:    # or [ni, nj, _] in save_man):
                 v[ni][nj] = 1
                 q.append((ni, nj, d+1))
     
@@ -127,7 +128,7 @@ djs = [0, -1, 1, 0]
 # 사람 : 1 ~ 15
 # 편의점 : -(1 ~ 30)
 save_man = []
-test_arr = [i for i in range(-15, 0)]
+test_arr = [i for i in range(-30, -1)]
 
 # 도착하면 1로 변경 (베이스 캠프 속에 사람 = (-1 => 1)) -> 1 찾으러 감
 base_camp = []
@@ -149,6 +150,7 @@ while 1:
             continue
         
         # [1] : 1칸 이동 (idx번째 man이 -idx번째 편의점을 향해..)
+        # print('idx', idx)
         if move_man(idx) == 1:
             man[idx] = [1, 1]
     
@@ -159,6 +161,11 @@ while 1:
         # for v in grid:
         #     print(*v)
         # print()
+        # print('idx 무네?',t)
+        # for g in grid:
+        #     print(*g)
+        # print()
+
         ci, cj = find_cu(-t)
 
         # t번 편의점과 가장 가까운 베이스캠프 찾기
@@ -185,6 +192,6 @@ while 1:
     # for v in grid:
     #     print(*v)
     # print()
-    # if t == 7:
-    #     break
+    if t == 55:
+        break
 print(t-1)
