@@ -168,7 +168,7 @@ while 1:
         for bi, bj in base:
             can_base.append(bfs(ci, cj, bi, bj))
         # print(*can_base)
-        can_base.sort(key = lambda x : (x[2], x[1], x[0]))
+        can_base.sort(key = lambda x : (x[2], x[0], x[1]))
         # print(*can_base)
         # si, sj == 선택된 베이스캠프
         si, sj = can_base[0][0], can_base[0][1]
