@@ -1,9 +1,19 @@
 # move_man, TARGET : CU
 def move_man(idx):
+    # print(idx, 'move_man')
+    flg = 0
     mi, mj = find_man(idx)
+    if (mi, mj) == (-1, -1):
+        for i, j, x in save_man:
+            if idx == x:
+                # print('여기다!')
+                mi, mj = i, j
+                flg = 2
+                break
+
+    # print(grid[mi][mj])
     ci, cj = find_cu(-idx)
     ri, rj = mi, mj
-    flg = 0
     # man의 초기 이동일 경우 -> (현재 위치 값 : idx => 999로 변경 (원래 베이스캠프 위치로..))
     if [mi, mj] in base_camp:
         flg = 1
@@ -19,7 +29,7 @@ def move_man(idx):
             if (ni, nj) == (ci, cj):
                 if flg == 1:
                     grid[mi][mj] = 999
-                else:
+                elif flg != 2:
                     grid[mi][mj] = 0
                 grid[ni][nj] = idx
                 return 1
@@ -28,9 +38,14 @@ def move_man(idx):
                 ri, rj = ni, nj
         if flg == 1:
             grid[mi][mj] = 999
-        else:
+        elif flg != 2:
             grid[mi][mj] = 0
-        grid[ri][rj] = idx
+        if grid[ri][rj] not in test_arr:
+            grid[ri][rj] = idx
+        else:
+            save_man.append((ri, rj, idx))
+    # for v in grid:
+    #     print(*v)
     return 0
 
 
@@ -50,7 +65,7 @@ def bfs(si, sj, ei, ej):
         for dr in [0, 1, 2, 3]:
             ni, nj = si + dis[dr], sj + djs[dr]
             # 안되면 grid 조건 제외하고 해보삼
-            if 0<=ni<n and 0<=nj<n and v[ni][nj] == 0: # and grid[ni][nj] <= 0 
+            if 0<=ni<n and 0<=nj<n and v[ni][nj] == 0 and grid[ni][nj] <= 0:
                 v[ni][nj] = 1
                 q.append((ni, nj, d+1))
     
@@ -62,6 +77,7 @@ def find_man(idx):
         for j in range(n):
             if grid[i][j] == idx:
                 return i, j
+    return -1, -1
 
 # t번 편의점 찾기
 def find_cu(t):
@@ -110,6 +126,8 @@ djs = [0, -1, 1, 0]
 # 베이스 캠프 : -999 였다가, 사람이 발견하면 사람이 들어갔다가, 출발하면 999로 변경
 # 사람 : 1 ~ 15
 # 편의점 : -(1 ~ 30)
+save_man = []
+test_arr = [i for i in range(-15, 0)]
 
 # 도착하면 1로 변경 (베이스 캠프 속에 사람 = (-1 => 1)) -> 1 찾으러 감
 base_camp = []
@@ -137,6 +155,10 @@ while 1:
     # 격자에 사람 추가
     if t <= m:
         # t번 편의점 찾기
+        # print(t, '번째')
+        # for v in grid:
+        #     print(*v)
+        # print()
         ci, cj = find_cu(-t)
 
         # t번 편의점과 가장 가까운 베이스캠프 찾기
@@ -146,6 +168,7 @@ while 1:
         for bi, bj in base:
             can_base.append(bfs(ci, cj, bi, bj))
         can_base.sort(key = lambda x : (x[2], x[1], x[0]))
+        # print(*can_base)
         # si, sj == 선택된 베이스캠프
         si, sj = can_base[0][0], can_base[0][1]
         # grid에 정보 최신화 (베이스캠프 -> 사람(t))
@@ -157,8 +180,10 @@ while 1:
 
 
     t += 1
+    # print(t-1, '초')
     # for v in grid:
     #     print(*v)
-    # if t == 4:
+    # print()
+    # if t == 7:
     #     break
 print(t-1)
