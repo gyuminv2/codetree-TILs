@@ -65,11 +65,11 @@ def bfs(si, sj, ei, ej):
         for dr in [0, 1, 2, 3]:
             ni, nj = si + dis[dr], sj + djs[dr]
             # 안되면 grid 조건 제외하고 해보삼
-            if 0<=ni<n and 0<=nj<n and v[ni][nj] == 0: # and grid[ni][nj] <= 0:
+            if 0<=ni<n and 0<=nj<n and v[ni][nj] == 0 and grid[ni][nj] <= 0:    # or [ni, nj, _] in save_man):
                 v[ni][nj] = 1
                 q.append((ni, nj, d+1))
     
-    return -1
+    return [999, 999, 999]
 
 # idx번 Man 찾기
 def find_man(idx):
@@ -167,6 +167,7 @@ while 1:
         base = find_base()
         for bi, bj in base:
             can_base.append(bfs(ci, cj, bi, bj))
+        # print(*can_base)
         can_base.sort(key = lambda x : (x[2], x[1], x[0]))
         # print(*can_base)
         # si, sj == 선택된 베이스캠프
