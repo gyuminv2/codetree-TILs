@@ -177,6 +177,8 @@ for cake in range(1, K+1):
             if in_range(min(i, ei), min(j, ej)):
                 squere.append([min(i, ei), min(j, ej), abs(i-ei)+1])
 
+    if not squere:
+        continue
     squere.sort(key = lambda x : (x[2], x[0], x[1]))
     # print(squere)
     si, sj, n = squere[0][0], squere[0][1], squere[0][2]
