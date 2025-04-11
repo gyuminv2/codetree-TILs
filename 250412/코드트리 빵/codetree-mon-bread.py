@@ -65,7 +65,7 @@ def bfs(si, sj, ei, ej):
         for dr in [0, 1, 2, 3]:
             ni, nj = si + dis[dr], sj + djs[dr]
             # 안되면 grid 조건 제외하고 해보삼
-            if 0<=ni<n and 0<=nj<n and v[ni][nj] == 0 and grid[ni][nj] <= 0:
+            if 0<=ni<n and 0<=nj<n and v[ni][nj] == 0: # and grid[ni][nj] <= 0:
                 v[ni][nj] = 1
                 q.append((ni, nj, d+1))
     
