@@ -138,57 +138,114 @@ for cake in range(1, K+1):
 
     # [2] 미로 회전
     # 출구와 가까운 runner 찾기
-    # mn_dist = 987654321
-    # si, sj = -1, -1
-    # for idx in range(1, M+1):
-    #     i, j, d, e = runner[idx]
-    #     if e == 1:
-    #         continue
-    #     dist = abs(i-ei) + abs(j-ej)
-    #     if mn_dist > dist:
-    #         mn_dist = dist
-    #         si, sj = i, j
-    #     elif mn_dist == dist:
-    #         if si > i:
-    #             si, sj = i, j
-    #         elif si == i:
-    #             if sj > j:
-    #                 si, sj = i, j
-
-    # 정사각형 만들기 (인당 최대 2개)
-    # x, y, n(크기)
-    squere = []
+    mn_dist = 987654321
     for idx in range(1, M+1):
         i, j, d, e = runner[idx]
         if e == 1:
             continue
-        # 동일 선상 == 2개, 대각선 1개
-        if i - ei == 0:                                # x축 동일 (위, 아래 정사각형)
-            dist = abs(j-ej)
-            for ti in range(i-dist, i+1):
-                if in_range(ti, min(j, ej)):
-                    squere.append([ti, min(j, ej), dist+1])
-        if j - ej == 0:                              # y축 동일 (왼쪽, 오른쪽 정사각형)
-            dist = abs(i-ei)
-            for tj in range(j-dist, j+1):
-                if in_range(min(i, ei), tj):
-                    squere.append([min(i, ei), tj, dist+1])
-        if abs(i-ei) == abs(j-ej):               # 대각선 (왼아, 오위, 왼위, 오아)
-            if in_range(min(i, ei), min(j, ej)):
-                squere.append([min(i, ei), min(j, ej), abs(i-ei)+1])
+        dist = abs(i-ei) + abs(j-ej)
+        if mn_dist > dist:
+            mn_dist = dist
+            si, sj = i, j
+    
+    n = (max(abs(si-ei)+1, abs(sj-ej)+1))
 
-    if not squere:
-        continue
-    squere.sort(key = lambda x : (x[2], x[0], x[1]))
+    # 정사각형 만들기 (인당 최대 2개)
+    # x, y, n(크기)
+    # squere = []
+    nsi, nsj = 987654321, 987654321
+    is_exit = 0
+    is_runner = 0
+    cand = list(set())
+    for i in range(N-n+1):
+        for j in range(N-n+1):
+            # 위
+            for jj in range(j, j+n):
+                if maze[i][jj] == -1:
+                    is_exit = 1
+                for idx in range(1, M+1):
+                    tsi, tsj = 987654321, 987654321
+                    si, sj, d, e = runner[idx]
+                    if e == 1:
+                        continue
+                    if (i, jj) == (si, sj):
+                        is_runner = 1
+            # 아래
+            for jj in range(j, j+n):
+                if maze[i+n-1][jj] == -1:
+                    is_exit = 1
+                for idx in range(1, M+1):
+                    tsi, tsj = 987654321, 987654321
+                    si, sj, d, e = runner[idx]
+                    if e == 1:
+                        continue
+                    if (i+n-1, jj) == (si, sj):
+                        is_runner = 1
+            # 왼쪽
+            for ii in range(i, i+n):
+                if maze[ii][j] == -1:
+                    is_exit = 1
+                for idx in range(1, M+1):
+                    tsi, tsj = 987654321, 987654321
+                    si, sj, d, e = runner[idx]
+                    if e == 1:
+                        continue
+                    if (ii, j) == (si, sj):
+                        is_runner = 1
+            if is_exit == 1 and is_runner == 1:
+                cand.append((i, j))
+            # 오른쪽
+            for ii in range(i, i+n):
+                if maze[ii][j+n-1] == -1:
+                    is_exit = 1
+                for idx in range(1, M+1):
+                    tsi, tsj = 987654321, 987654321
+                    si, sj, d, e = runner[idx]
+                    if e == 1:
+                        continue
+                    if (ii, j+n-1) == (si, sj):
+                        is_runner = 1
+
+            if is_exit == 1 and is_runner == 1:
+                cand.append((i, j))
+            is_exit = 0
+            is_runner = 0
+
+    # print('cand :', *cand)
+    cand.sort(key = lambda x : (x[0], x[1]))
+    nsi, nsj = cand[0][0], cand[0][1]
+    # print('nsi, nsj :', nsi, nsj)
+    # for idx in range(1, M+1):
+    #     i, j, d, e = runner[idx]
+    #     if e == 1:
+    #         continue
+    #     # 동일 선상 == 2개, 대각선 1개
+    #     if i - ei == 0:                                # x축 동일 (위, 아래 정사각형)
+    #         dist = abs(j-ej)
+    #         for ti in range(i-dist, i+1):
+    #             if in_range(ti, min(j, ej)):
+    #                 squere.append([ti, min(j, ej), dist+1])
+    #     if j - ej == 0:                              # y축 동일 (왼쪽, 오른쪽 정사각형)
+    #         dist = abs(i-ei)
+    #         for tj in range(j-dist, j+1):
+    #             if in_range(min(i, ei), tj):
+    #                 squere.append([min(i, ei), tj, dist+1])
+    #     if abs(i-ei) == abs(j-ej):               # 대각선 (왼아, 오위, 왼위, 오아)
+    #         if in_range(min(i, ei), min(j, ej)):
+    #             squere.append([min(i, ei), min(j, ej), abs(i-ei)+1])
+
+    # if not squere:
+    #     continue
+    # squere.sort(key = lambda x : (x[2], x[0], x[1]))
     # print(squere)
-    si, sj, n = squere[0][0], squere[0][1], squere[0][2]
+    # si, sj, n = squere[0][0], squere[0][1], squere[0][2]
     # print(si, sj, n)
 
     # 정사각형 크기
     # 90도 회전
     n_maze = [a[:] for a in maze]
     # print('회전')
-    maze = rotate(n_maze, si, sj, n)
+    maze = rotate(n_maze, nsi, nsj, n)
     # for g in maze:
     #     print(*g)
     # print()
