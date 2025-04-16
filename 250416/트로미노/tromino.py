@@ -11,7 +11,7 @@ def in_range(x, y):
 
 mx_sum = -1
 for i in range(n):
-    for j in range(n):
+    for j in range(m):
         # --- 모양
         if in_range(i, j+2):
             mx_sum = max(mx_sum, arr[i][j] + arr[i][j+1] + arr[i][j+2])
