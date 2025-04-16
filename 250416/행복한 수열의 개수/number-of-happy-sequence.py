@@ -19,7 +19,7 @@ for j in range(n):
 
 for i in range(n):
     repeat = 1
-    for j in range(i+1, n-1):
+    for j in range(i, n-1):
         if row_arr[i][j] == row_arr[i][j+1]:
             repeat += 1
         else:
@@ -35,7 +35,7 @@ for i in range(n):
 
 for i in range(n):
     repeat = 1
-    for j in range(i+1, n-1):
+    for j in range(i, n-1):
         if col_arr[i][j] == col_arr[i][j+1]:
             repeat += 1
         else:
