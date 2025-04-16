@@ -19,13 +19,16 @@ for j in range(n):
 
 for i in range(n):
     repeat = 1
-    for j in range(i, n-1):
+    mx_repeat = 0
+    for j in range(n-1):
         if row_arr[i][j] == row_arr[i][j+1]:
             repeat += 1
         else:
+            mx_repeat = max(mx_repeat, repeat)
             repeat = 1
-    # print(repeat)
-    if repeat >= m:
+    mx_repeat = max(mx_repeat, repeat)
+    if mx_repeat >= m:
+        # print(mx_repeat)
         ans += 1
 
 # 열
@@ -35,12 +38,15 @@ for i in range(n):
 
 for i in range(n):
     repeat = 1
-    for j in range(i, n-1):
+    mx_repeat = 0
+    for j in range(n-1):
         if col_arr[i][j] == col_arr[i][j+1]:
             repeat += 1
         else:
+            mx_repeat = max(mx_repeat, repeat)
             repeat = 1
-    # print(repeat)
-    if repeat >= m:
+    mx_repeat = max(mx_repeat, repeat)
+    if mx_repeat >= m:
+        # print(mx_repeat)
         ans += 1
 print(ans)
